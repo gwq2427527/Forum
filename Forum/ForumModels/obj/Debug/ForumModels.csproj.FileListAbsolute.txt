@@ -1,0 +1,9 @@
+E:\My\Forum\V1.0\Code\Forum\ForumModels\bin\Debug\ForumModels.dll
+E:\My\Forum\V1.0\Code\Forum\ForumModels\bin\Debug\ForumModels.pdb
+E:\My\Forum\V1.0\Code\Forum\ForumModels\obj\Debug\ForumModels.dll
+E:\My\Forum\V1.0\Code\Forum\ForumModels\obj\Debug\ForumModels.pdb
+C:\Users\guowe\Desktop\Forum\ForumModels\bin\Debug\ForumModels.dll
+C:\Users\guowe\Desktop\Forum\ForumModels\bin\Debug\ForumModels.pdb
+C:\Users\guowe\Desktop\Forum\ForumModels\obj\Debug\ForumModels.csprojResolveAssemblyReference.cache
+C:\Users\guowe\Desktop\Forum\ForumModels\obj\Debug\ForumModels.dll
+C:\Users\guowe\Desktop\Forum\ForumModels\obj\Debug\ForumModels.pdb

@@ -1,0 +1,150 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>ASP.NET Phone Forum - Welcome</title>
+    <script src="Js/jquery.min.js"></script>
+    <link href="CSS/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="CSS/js/bootstrap.min.js"></script>
+    <script src="Js/validate.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSearch").click(function () {
+                var keywords = $("#txtKeywords").val().trim();
+                location.href = "Lists.aspx?keywords=" + encodeURI(keywords);
+            });
+        });
+
+
+        $(function () {
+            var p = 0, t = 0, top = $(".divImg").offset().top;
+            //广告滚动事件
+            $(window).scroll(function (e) {
+                p = $(this).scrollTop();
+
+                if (t <= p) {//下滚
+                    t = p;
+                    $(".divImg").css("top", top + p + "px");
+                }
+                else {//上滚
+                    t = p;
+                    $(".divImg").css("top", top + p + "px");
+                }
+            });
+        });
+
+        function removeAD() {
+            $(".divImg").hide();
+        }
+    </script>
+
+    <style type="text/css">
+        .divImg {
+            z-index:1000;
+            position: relative;
+            top: 200px;
+            float: right;
+        }
+
+            .divImg a {
+                cursor: pointer;
+            }
+
+        .span {
+            position: absolute;
+            top: 0;
+            left: 83px;
+            z-index: 1;
+        }
+    </style>
+    <link href="CSS/master.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div class="divImg">
+        <a href="#">
+            <img src="Images/ad.jpg" style="height: 200px; width: 100px;" /></a>
+        <a onclick="removeAD()"><span class="glyphicon glyphicon-remove span"></span></a>
+    </div>
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation" style="height: 50px;">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" style="padding-bottom: 36px; margin-right: 10px; margin-left: -20px;" data-toggle="dropdown"><span class="hrspan"></span><span class="hrspan"></span><span class="hrspan"></span>
+                            </a>
+                            <ul class="dropdown-menu" runat="server" style="width: 30%;">
+                                <%
+                                    if (_TypeList.Count > 0)
+                                    {
+                                        for (int i = 0; i < _TypeList.Count; i++)
+                                        {
+                                %>
+                                <li><a href="Lists.aspx?tid=+<%= _TypeList[i].ID %>"><%=  _TypeList[i].Name %></a></li>
+                                <%
+                                        }
+                                    }
+                                %>
+                                <%
+                                    if (Session["UserInfo"] != null)
+                                    { 
+                                %>
+                                <li class="divider"></li>
+                                <li><a href="EditUserInfo.aspx?tid=0">Change Password</a></li>
+                                <li class="divider"></li>
+                                <li><a href="EditUserInfo.aspx?tid=1">Edit Profiles</a></li>
+                                <li class="divider"></li>
+                                <li><a href="Collect.aspx">Collection list</a></li>
+                                <%
+                                        if ((Session["UserInfo"] as ForumModels.UserInfo).Role == 1)
+                                        {                                            
+                                %>
+                                <li class="divider"></li>
+                                <li><a href="TypeList.aspx">Category list</a></li>
+                                <%}
+                                    } %>
+                            </ul>
+                        </li>
+                        <li style="line-height: 50px; color: #096df8;">
+                            <a class="navbar-brand" href="Index.aspx">ASP.NET&nbsp;Forum</a>
+                        </li>
+                        <li style="line-height: 50px; color: #096df8;">
+                            <%= GetTypeName() %>
+                        </li>
+                    </ul>
+                    <div class="nav navbar-nav" style="line-height: 50px; margin-left: 4%;">
+                        <input type="text" id="txtKeywords" style="display: inline; width: 200px;" value="<%=Request.QueryString["keywords"] ?? string.Empty %>" class="form-control" placeholder="Search" />
+                        <button type="button" class="btn btn-default" id="btnSearch">Search</button>&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <% if (Session["UserInfo"] == null)
+                           {                 %>
+                        <li><a href="LoginUser.aspx"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</a></li>
+                        <li><a href="UserRegistered.aspx"><span class="glyphicon glyphicon-user"></span>&nbsp;Register</a></li>
+                        <%}
+                           else
+                           { %>
+                        <li>Welcome<a style="display: inline; line-height: 50px; color: #25c6fa"><%=Session["UserInfo"].ToString() %></a></li>
+                        <li><a href="AddPost.aspx">Add New Post</a></li>
+                        <li><a href="Logout.aspx" onclick="return confirm('Do you want to logout?')">Logout</a></li>
+                        <%} %>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <form id="form1" runat="server" class="navbar-form navbar" role="search">
+            <asp:ContentPlaceHolder ID="cen" runat="server">
+            </asp:ContentPlaceHolder>
+            <div style="margin: 0 auto; margin-top: 20px;" class="text-center">
+                <ul id="mul">
+                    <li><a href="https://www.google.se/">Google</a>|<a href="https://www.youtube.com/">YouTube</a>|<a href="http://hkr.se/">Högskolan Kristianstad</a>|<a href="https://hkr.itslearning.com/Index.aspx?EloginErrorCode=6">Itslearning</a></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
